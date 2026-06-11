@@ -2,6 +2,59 @@
  let stream;
 let recorder;
 let chunks = [];
+
+function showHome(){
+    document.getElementById("videos").style.display = "grid";
+    document.getElementById("historySection").classList.add("hidden");
+    document.getElementById("channelSection").classList.add("hidden");
+}
+
+function showHistory(){
+    document.getElementById("videos").style.display = "none";
+    document.getElementById("historySection").classList.remove("hidden");
+    document.getElementById("channelSection").classList.add("hidden");
+
+    const container = document.getElementById("historyVideos");
+    container.innerHTML = "";
+
+    historyVideos.forEach(video=>{
+        container.innerHTML += `
+        <div class="video-card">
+            <h3>${video.title}</h3>
+            <video controls>
+                <source src="${video.src}">
+            </video>
+        </div>
+        `;
+    });
+}
+
+function showChannel(){
+    document.getElementById("videos").style.display = "none";
+    document.getElementById("historySection").classList.add("hidden");
+    document.getElementById("channelSection").classList.remove("hidden");
+
+    const container = document.getElementById("channelVideos");
+    container.innerHTML = "";
+
+    videos.forEach(video=>{
+        container.innerHTML += `
+        <div class="video-card">
+            <h3>${video.title}</h3>
+            <video controls>
+                <source src="${video.src}">
+            </video>
+        </div>
+        `;
+    });
+}
+
+function addToHistory(video){
+    historyVideos.unshift(video);
+    localStorage.setItem("history", JSON.stringify(historyVideos));
+}
+// فتح/غلق upload box
+
 // فتح/غلق upload box
 function toggleUpload(){
     document.getElementById("uploadBox").classList.toggle("hidden");
@@ -22,6 +75,7 @@ async function startRecording() {
 }
  // إيقاف التسجيل
 function stopRecording() {
+    if(recorder){
     recorder.stop();
     stream.getTracks().forEach(track => track.stop());
 }
@@ -105,6 +159,19 @@ function displayVideos(){
         `;
     });
 }
+  function addToHistoryById(id){
+
+    const video = videos.find(v => v.id === id);
+
+    if(video){
+
+        historyVideos.unshift(video);
+
+        localStorage.setItem(
+            "history",
+            JSON.stringify(historyVideos)
+        );
+}}
 
 function likeVideo(id){
     videos = videos.map(v=>{
