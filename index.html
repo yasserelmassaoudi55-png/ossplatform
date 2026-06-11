@@ -11,6 +11,11 @@
 
 <header class="header">
     <h1>🎓 Nadeer Platform</h1>
+ <nav class="menu">
+    <button onclick="showHome()">🏠 Accueil</button>
+    <button onclick="showHistory()">🕒 Historique</button>
+    <button onclick="showChannel()">📺 Chaîne</button>
+</nav>
 
     <input type="text" id="search" 
            placeholder="ابحث عن فيديو..." 
@@ -34,6 +39,15 @@
 
 <!-- عرض الفيديوهات -->
 <section id="videos"></section>
+ <section id="historySection" class="hidden">
+    <h2>🕒 Historique</h2>
+    <div id="historyVideos"></div>
+</section>
+
+<section id="channelSection" class="hidden">
+    <h2>📺 Ma Chaîne</h2>
+    <div id="channelVideos"></div>
+</section>
 
 <script src="script.js"></script>
 </body>
